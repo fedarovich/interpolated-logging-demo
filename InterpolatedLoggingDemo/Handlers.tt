@@ -1,0 +1,37 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".g.cs" #>
+<#
+string[] logLevels = { "Trace", "Debug", "Information", "Warning", "Error", "Critical" };
+#>
+#nullable enable
+using System.Runtime.CompilerServices;
+namespace InterpolatedLoggingDemo;
+
+<# foreach (var logLevel in logLevels) { #>
+
+[InterpolatedStringHandler]
+public ref struct StructuredLogging<#= logLevel #>InterpolatedStringHandler
+{
+    private readonly StructuredLoggingInterpolatedStringHandler _handler;
+
+    public StructuredLogging<#= logLevel #>InterpolatedStringHandler(int literalLength, int formattedCount, ILogger logger, out bool isEnabled)
+    {
+        _handler = new StructuredLoggingInterpolatedStringHandler(literalLength, formattedCount, logger, LogLevel.<#= logLevel #>, out isEnabled);
+    }
+
+    public bool IsEnabled => _handler.IsEnabled;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AppendLiteral(string s) => _handler.AppendLiteral(s);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string name = "") => _handler.AppendFormatted(value, name);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public (string, object?[]) GetTemplateAndArguments() => _handler.GetTemplateAndArguments();
+}
+<# } #>

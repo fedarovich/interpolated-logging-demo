@@ -1,0 +1,54 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".g.cs" #>
+<#
+string[] logLevels = { "Trace", "Debug", "Information", "Warning", "Error", "Critical" };
+#>
+#nullable enable
+using System.Runtime.CompilerServices;
+namespace InterpolatedLoggingDemo;
+
+public static partial class LoggerExtensions
+{
+    <# foreach (var logLevel in logLevels) { #>
+
+    public static void Log<#= logLevel #>(this ILogger logger, [InterpolatedStringHandlerArgument("logger")] ref StructuredLogging<#= logLevel #>InterpolatedStringHandler handler)
+    {
+        if (handler.IsEnabled)
+        {
+            var (template, arguments) = handler.GetTemplateAndArguments();
+            logger.Log<#= logLevel #>(template, arguments);
+        }
+    }
+
+    public static void Log<#= logLevel #>(this ILogger logger, EventId eventId, [InterpolatedStringHandlerArgument("logger")] ref StructuredLogging<#= logLevel #>InterpolatedStringHandler handler)
+    {
+        if (handler.IsEnabled)
+        {
+            var (template, arguments) = handler.GetTemplateAndArguments();
+            logger.Log<#= logLevel #>(eventId, template, arguments);
+        }
+    }
+
+    public static void Log<#= logLevel #>(this ILogger logger, Exception? exception, [InterpolatedStringHandlerArgument("logger")] ref StructuredLogging<#= logLevel #>InterpolatedStringHandler handler)
+    {
+        if (handler.IsEnabled)
+        {
+            var (template, arguments) = handler.GetTemplateAndArguments();
+            logger.Log<#= logLevel #>(exception, template, arguments);
+        }
+    }
+
+    public static void Log<#= logLevel #>(this ILogger logger, EventId eventId, Exception? exception, [InterpolatedStringHandlerArgument("logger")] ref StructuredLogging<#= logLevel #>InterpolatedStringHandler handler)
+    {
+        if (handler.IsEnabled)
+        {
+            var (template, arguments) = handler.GetTemplateAndArguments();
+            logger.Log<#= logLevel #>(eventId, exception, template, arguments);
+        }
+    }
+    <# } #>
+}

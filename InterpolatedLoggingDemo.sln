@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterpolatedLoggingDemo", "InterpolatedLoggingDemo\InterpolatedLoggingDemo.csproj", "{F40ECE3A-C599-4370-8C3D-07C7403361FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F40ECE3A-C599-4370-8C3D-07C7403361FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F40ECE3A-C599-4370-8C3D-07C7403361FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F40ECE3A-C599-4370-8C3D-07C7403361FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F40ECE3A-C599-4370-8C3D-07C7403361FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {222CE1B9-51BE-4801-A821-7FF118F70002}
+	EndGlobalSection
+EndGlobal
