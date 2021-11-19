@@ -6,7 +6,7 @@ namespace InterpolatedLoggingDemo;
 public ref struct StructuredLoggingInterpolatedStringHandler
 {
     private readonly StringBuilder _template = null!;
-    private readonly List<object?> _arguments = null!;
+    private readonly ArgumentList _arguments = null!;
 
     public bool IsEnabled { get; }
 
@@ -15,7 +15,7 @@ public ref struct StructuredLoggingInterpolatedStringHandler
         IsEnabled = isEnabled = logger.IsEnabled(logLevel);
         if (isEnabled)
         {
-            _template = new (literalLength);
+            _template = new (literalLength + 20 * formattedCount);
             _arguments = new (formattedCount);
         }
     }
@@ -37,5 +37,16 @@ public ref struct StructuredLoggingInterpolatedStringHandler
         _template.Append($"{{@{name}}}");
     }
 
-    public (string, object?[]) GetTemplateAndArguments() => (_template.ToString(), _arguments.ToArray());
+    public (string, object?[]) GetTemplateAndArguments() => (_template.ToString(), _arguments.Arguments);
+
+    private class ArgumentList
+    {
+        private int _index;
+
+        public object?[] Arguments { get; }
+
+        public ArgumentList(int formattedCount) => Arguments = new object?[formattedCount];
+
+        public void Add(object? value) => Arguments[_index++] = value;
+    }
 }
